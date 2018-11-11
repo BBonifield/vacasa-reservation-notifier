@@ -10,6 +10,8 @@ const connectDb = require('./src/connect-db');
 const authUrl = `${process.env.API_HOST}/v1/owners/auth`;
 
 (async function() {
+  console.log('Checking for reservations');
+
   const twilioClient = new twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
   const { client, collection, err: dbError } = await connectDb();
@@ -54,7 +56,7 @@ const authUrl = `${process.env.API_HOST}/v1/owners/auth`;
     json: true,
   });
 
-  console.log(`Retrieved ${reservationResp.data} reservations`);
+  console.log(`Retrieved ${reservationResp.data.length} reservations`);
 
   await Promise.all(reservationResp.data.map(async (reservation) => {
     const records = await collection.find({ id: reservation.id }).toArray();
@@ -76,11 +78,11 @@ const authUrl = `${process.env.API_HOST}/v1/owners/auth`;
 
       await Promise.all(smsTargets.map(async (smsTarget) => {
         try {
-          await twilioClient.messages.create({
-            body: body,
-            to: smsTarget,
-            from: process.env.TWILIO_FROM,
-          });
+          // await twilioClient.messages.create({
+            // body: body,
+            // to: smsTarget,
+            // from: process.env.TWILIO_FROM,
+          // });
         } catch(err) {
           console.log('Encountered error:', err);
         }

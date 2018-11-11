@@ -3,6 +3,8 @@ require('dotenv').config();
 const connectDb = require('./src/connect-db');
 
 (async function() {
+  console.log('Truncating');
+
   const { client, db, err: dbError } = await connectDb();
 
   if (dbError) {
@@ -16,5 +18,6 @@ const connectDb = require('./src/connect-db');
     console.log(err);
   }
 
+  console.log('Done');
   client.close();
 })();
