@@ -1,0 +1,17 @@
+{
+  "name": "vacasa-reservations",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "BBonifield <bobbonifield@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.5.3",
+    "dotenv": "^6.1.0",
+    "lodash": "^4.17.11",
+    "mongodb": "^3.1.9",
+    "node-datetime": "^2.1.2",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2",
+    "twilio": "^3.23.2"
+  }
+}
