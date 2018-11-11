@@ -78,11 +78,11 @@ const authUrl = `${process.env.API_HOST}/v1/owners/auth`;
 
       await Promise.all(smsTargets.map(async (smsTarget) => {
         try {
-          // await twilioClient.messages.create({
-            // body: body,
-            // to: smsTarget,
-            // from: process.env.TWILIO_FROM,
-          // });
+          await twilioClient.messages.create({
+            body: body,
+            to: smsTarget,
+            from: process.env.TWILIO_FROM,
+          });
         } catch(err) {
           console.log('Encountered error:', err);
         }
