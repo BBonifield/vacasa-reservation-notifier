@@ -65,3 +65,16 @@ notifications.
 
 Clear out all reservations from the MongoDB collection.  Useful for
 debugging purposes or if something went wrong.
+
+# Deployment
+
+Heroku is the easiest bet for deployment.  They provide a free MongoDB
+addon via [mLab](https://elements.heroku.com/addons/mongolab) that
+allows for easy setup.  Additionally, their
+[Scheduler](https://elements.heroku.com/addons/scheduler) addon allows
+for Cron-style runs (e.g. hourly), effectively making the deployment
+free.
+
+Once your app is setup, you just need to add your relevant configuration
+variables via `heroku config:set` and then setup the scheduler to run
+`node check.js` at whatever interval you desire.
