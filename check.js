@@ -35,6 +35,8 @@ const authUrl = `${process.env.API_HOST}/v1/owners/auth`;
     },
   });
 
+  console.log('Logged in');
+
   const authToken = authResp.data.token;
   const today = moment().format('YYYY-MM-DD');
   const reservationsUri = `${process.env.API_HOST}/v1/owners/${process.env.VACASA_OWNER_ID}/units/${process.env.VACASA_UNIT_ID}/reservations`
@@ -52,11 +54,13 @@ const authUrl = `${process.env.API_HOST}/v1/owners/auth`;
     json: true,
   });
 
+  console.log(`Retrieved ${reservationResp.data} reservations`);
+
   await Promise.all(reservationResp.data.map(async (reservation) => {
     const records = await collection.find({ id: reservation.id }).toArray();
 
     if (records.length === 0) {
-      console.log('New reservation found');
+      console.log('New reservation, processing');
 
       const startDate = moment(reservation.attributes.start_date);
       const endDate = moment(reservation.attributes.end_date);
@@ -83,6 +87,8 @@ const authUrl = `${process.env.API_HOST}/v1/owners/auth`;
       }));
 
       await collection.insertOne(reservation);
+    } else {
+      console.log('Old reservation, skipping');
     }
   }));
 
